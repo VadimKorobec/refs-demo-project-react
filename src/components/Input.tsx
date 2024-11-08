@@ -2,11 +2,12 @@ import { forwardRef } from "react";
 
 interface InputProps {
   label?: string;
+  type?: string;
   textarea?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
-  ({ label, textarea }, ref) => {
+  ({ label, textarea,type }, ref) => {
     const classes =
       "w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600";
 
@@ -21,7 +22,7 @@ const Input = forwardRef<HTMLInputElement | HTMLTextAreaElement, InputProps>(
             className={classes}
           />
         ) : (
-          <input ref={ref as React.Ref<HTMLInputElement>} className={classes} />
+          <input type={type} ref={ref as React.Ref<HTMLInputElement>} className={classes} />
         )}
       </p>
     );

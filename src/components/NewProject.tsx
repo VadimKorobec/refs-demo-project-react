@@ -3,10 +3,10 @@ import Input from "./Input";
 import { Project } from "../App";
 
 interface NewProjectProps {
-  addProject: (data: Project) => void;
+  onAddProject: (data: Project) => void;
 }
 
-const NewProject = ({addProject}:NewProjectProps) => {
+const NewProject = ({ onAddProject }: NewProjectProps) => {
   const titleRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const descriptionRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
   const dueDateRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
@@ -17,9 +17,9 @@ const NewProject = ({addProject}:NewProjectProps) => {
         id: Math.random(),
         title: titleRef.current.value,
         description: descriptionRef.current.value,
-        date: dueDateRef.current.value,
+        dueDate: dueDateRef.current.value,
       };
-      addProject(newProject)
+      onAddProject(newProject);
     }
   };
 
@@ -41,9 +41,9 @@ const NewProject = ({addProject}:NewProjectProps) => {
         </li>
       </menu>
       <div>
-        <Input ref={titleRef} label="Title" />
+        <Input type="text" ref={titleRef} label="Title" />
         <Input ref={descriptionRef} label="Description" textarea />
-        <Input ref={dueDateRef} label="Due Date" />
+        <Input type="date" ref={dueDateRef} label="Due Date" />
       </div>
     </div>
   );

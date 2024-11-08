@@ -7,10 +7,10 @@ export interface Project {
   id: number;
   title: string;
   description: string;
-  date: string;
+  dueDate: string;
 }
 
-interface ProjectState {
+export interface ProjectState {
   selectedProjectId: undefined | null;
   projects: Project[];
 }
@@ -21,8 +21,6 @@ function App() {
     projects: [],
   });
 
-  
-
   const handleStartAddProject = () => {
     setProjectState((prevState) => ({ ...prevState, selectedProjectId: null }));
   };
@@ -30,6 +28,7 @@ function App() {
   const handleAddProject = (projectData: Project) => {
     setProjectState((prevState) => ({
       ...prevState,
+      selectedProjectId:undefined,
       projects: [...prevState.projects, projectData],
     }));
   };
@@ -37,14 +36,14 @@ function App() {
   let content;
 
   if (projectState.selectedProjectId === null) {
-    content = <NewProject addProject={handleAddProject} />;
+    content = <NewProject onAddProject={handleAddProject} />;
   } else if (projectState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
 
   return (
     <main className="h-screen my-8 flex gap-8 ">
-      <ProjectsSidebar onStartAddProject={handleStartAddProject} />
+      <ProjectsSidebar projects={projectState.projects} onStartAddProject={handleStartAddProject} />
       {content}
     </main>
   );
