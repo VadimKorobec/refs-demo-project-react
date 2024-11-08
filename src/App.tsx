@@ -3,10 +3,11 @@ import NoProjectSelected from "./components/NoProjectSelected";
 import ProjectsSidebar from "./components/ProjectsSidebar";
 import NewProject from "./components/NewProject";
 
-interface Project {
+export interface Project {
+  id: number;
   title: string;
   description: string;
-  date: number;
+  date: string;
 }
 
 interface ProjectState {
@@ -20,15 +21,23 @@ function App() {
     projects: [],
   });
 
+  
+
   const handleStartAddProject = () => {
     setProjectState((prevState) => ({ ...prevState, selectedProjectId: null }));
   };
-  
+
+  const handleAddProject = (projectData: Project) => {
+    setProjectState((prevState) => ({
+      ...prevState,
+      projects: [...prevState.projects, projectData],
+    }));
+  };
 
   let content;
 
   if (projectState.selectedProjectId === null) {
-    content = <NewProject />;
+    content = <NewProject addProject={handleAddProject} />;
   } else if (projectState.selectedProjectId === undefined) {
     content = <NoProjectSelected onStartAddProject={handleStartAddProject} />;
   }
