@@ -12,6 +12,12 @@ const NewProject = ({ onAddProject }: NewProjectProps) => {
   const dueDateRef = useRef<HTMLInputElement | HTMLTextAreaElement>(null);
 
   const handleSave = () => {
+    if (
+      titleRef.current?.value.trim() === "" ||
+      descriptionRef.current?.value.trim() === "" ||
+      dueDateRef.current?.value.trim() === ""
+    ) {
+    }
     if (titleRef.current && descriptionRef.current && dueDateRef.current) {
       const newProject = {
         id: Math.random(),
