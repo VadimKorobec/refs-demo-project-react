@@ -4,6 +4,11 @@ import ProjectsSidebar from "./components/ProjectsSidebar";
 import NewProject from "./components/NewProject";
 import SelectedProject from "./components/SelectedProject";
 
+export interface Task {
+  id: number;
+  text: string;
+}
+
 export interface Project {
   id: number;
   title: string;
@@ -14,12 +19,14 @@ export interface Project {
 export interface ProjectState {
   selectedProjectId: undefined | null | number;
   projects: Project[];
+  tasks: Task[];
 }
 
 function App() {
   const [projectState, setProjectState] = useState<ProjectState>({
     selectedProjectId: undefined,
     projects: [],
+    tasks: [],
   });
 
   const handleSelectProject = (id: number) => {
@@ -56,6 +63,30 @@ function App() {
     }));
   };
 
+  const handleAddTask = (text: string) => {
+    setProjectState((prevState) => {
+      const taskId = Math.random();
+      const newTask = {
+        id: taskId,
+        projectId: prevState.selectedProjectId,
+        text: text,
+      };
+
+      return {
+        ...prevState,
+        tasks: [...prevState.tasks, newTask],
+      };
+    });
+  };
+
+  const handleDeletTask = (id: number) => {
+    const newState = projectState.tasks.filter((task) => task.id !== id);
+    setProjectState((prevState) => ({
+      ...prevState,
+      tasks: newState,
+    }));
+  };
+
   const selectedProject = projectState.projects.find(
     (project) => project.id === projectState.selectedProjectId
   );
@@ -76,6 +107,9 @@ function App() {
       <SelectedProject
         onDelete={handleDeleteProject}
         project={selectedProject}
+        onAddTask={handleAddTask}
+        onDeleteTask={handleDeletTask}
+        tasks={projectState.tasks}
       />
     );
   }
@@ -86,6 +120,7 @@ function App() {
         projects={projectState.projects}
         onStartAddProject={handleStartAddProject}
         onSelectProject={handleSelectProject}
+        
       />
       {content}
     </main>
