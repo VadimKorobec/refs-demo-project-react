@@ -1,4 +1,5 @@
 import { Project } from "../App";
+import Tasks from "./Tasks";
 
 interface SelectedProjectProps {
   project: Project;
@@ -23,7 +24,7 @@ const SelectedProject = ({ project, onDelete }: SelectedProjectProps) => {
             className="text-stone-600 hover:text-stone-950"
             onClick={() => onDelete(project.id)}
           >
-            DELET
+            Delete
           </button>
         </div>
         <p className="mb-4 text-stone-400">{formattedDate}</p>
@@ -31,7 +32,7 @@ const SelectedProject = ({ project, onDelete }: SelectedProjectProps) => {
           {project.description}
         </p>
       </header>
-      TASKS
+      <Tasks/>
     </div>
   );
 };
