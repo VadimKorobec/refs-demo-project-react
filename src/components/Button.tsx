@@ -1,6 +1,6 @@
 interface ButtonProps {
   children: React.ReactNode;
-  onStartAddProject: () => void;
+  onStartAddProject?: () => void;
 }
 
 const Button = ({ children, onStartAddProject }: ButtonProps) => {
